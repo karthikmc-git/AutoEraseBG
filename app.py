@@ -1,9 +1,5 @@
 import os
 import requests
-from selenium import webdriver
-from selenium.webdriver.edge.service import Service
-from webdriver_manager.microsoft import EdgeChromiumDriverManager
-from selenium.webdriver.edge.options import Options
 
 class BackgroundRemover:
     def __init__(self, api_key):
@@ -12,17 +8,6 @@ class BackgroundRemover:
         """
         self.api_key = api_key
         self.base_url = 'https://api.remove.bg/v1.0/removebg'
-        
-        # Setup Microsoft Edge WebDriver
-        edge_options = Options()
-        edge_options.use_chromium = True
-        # Optional: Add headless mode if you don't want browser window to show
-        # edge_options.add_argument("--headless")
-        
-        self.driver = webdriver.Edge(
-            service=Service(EdgeChromiumDriverManager().install()),
-            options=edge_options
-        )
 
     def remove_background(self, input_path, output_path):
         """
@@ -68,17 +53,10 @@ class BackgroundRemover:
             except Exception as e:
                 print(f"Failed to process {file_path}: {e}")
 
-    def close(self):
-        """
-        Close the WebDriver session
-        """
-        if self.driver:
-            self.driver.quit()
-
 def main():
     # Predefined API key and folder path
     API_KEY = 'HgqwpdH7a8Pfa3zW3irJ7xs1'
-    FOLDER_PATH = r'C:\Users\karth\OneDrive\Desktop\Freepix'
+    FOLDER_PATH = r'C:\Users\karth\OneDrive\Desktop\Vector_images'
     
     # Validate folder path
     if not os.path.isdir(FOLDER_PATH):
@@ -97,11 +75,8 @@ def main():
     
     except Exception as e:
         print(f"An error occurred: {e}")
-    
-    finally:
-        # Ensure WebDriver is closed
-        if bg_remover:
-            bg_remover.close()
 
 if __name__ == '__main__':
     main()
+    
+
